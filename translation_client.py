@@ -5,6 +5,9 @@ DEFAULT_BASE_ENDPOINT = 'http://localhost:8080/'
 
 class TranslationClient(object):
     def __init__(self, username, password, base_endpoint=DEFAULT_BASE_ENDPOINT):
+        assert isinstance(username, unicode)
+        assert isinstance(password, unicode)
+        
         self._base_endpoint = base_endpoint
         self._sid = self._login(username, password)
     
@@ -36,6 +39,10 @@ class TranslationClient(object):
         assert False
 
     def translate(self, string, src_lang, target_lang, sync=False):
+        assert isinstance(string, unicode)
+        assert isinstance(src_lang, unicode)
+        assert isinstance(target_lang, unicode)
+        
         endpoint = self._base_endpoint + 'translate'
         r = requests.post(endpoint, json={'sid': self._sid,
                                         'string': string,
