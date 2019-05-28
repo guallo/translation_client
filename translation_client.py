@@ -8,8 +8,10 @@ class TranslationClient(object):
         assert isinstance(username, unicode)
         assert isinstance(password, unicode)
         
+        self._username = username
+        self._password = password
         self._base_endpoint = base_endpoint
-        self._sid = self._login(username, password)
+        self._sid = self._login(self._username, self._password)
     
     def __del__(self):
         self._logout()
@@ -37,6 +39,9 @@ class TranslationClient(object):
             return
         self._check_for_errors(r.json())
         assert False
+    
+    def relogin(self):
+        self._sid = self._login(self._username, self._password)
 
     def translate(self, string, src_lang, target_lang, sync=False):
         assert isinstance(string, unicode)
